@@ -7,7 +7,7 @@ import time
 import numpy as np
 from tqdm import tqdm
 import torch
-from tensorboardX import SummaryWriter
+#from tensorboardX import SummaryWriter
 import random
 import torch.utils.model_zoo as model_zoo
 from pathlib import Path
@@ -34,7 +34,7 @@ model_urls = {
 }
 
 def FedProto_taskheter(args, train_dataset, test_dataset, user_groups, user_groups_lt, local_model_list, classes_list):
-    summary_writer = SummaryWriter('../tensorboard/'+ args.dataset +'_fedproto_' + str(args.ways) + 'w' + str(args.shots) + 's' + str(args.stdev) + 'e_' + str(args.num_users) + 'u_' + str(args.rounds) + 'r')
+    #summary_writer = SummaryWriter('../tensorboard/'+ args.dataset +'_fedproto_' + str(args.ways) + 'w' + str(args.shots) + 's' + str(args.stdev) + 'e_' + str(args.num_users) + 'u_' + str(args.rounds) + 'r')
 
     global_protos = []
     idxs_users = np.arange(args.num_users)
@@ -54,10 +54,10 @@ def FedProto_taskheter(args, train_dataset, test_dataset, user_groups, user_grou
             local_weights.append(copy.deepcopy(w))
             local_losses.append(copy.deepcopy(loss['total']))
             local_protos[idx] = agg_protos
-            summary_writer.add_scalar('Train/Loss/user' + str(idx + 1), loss['total'], round)
-            summary_writer.add_scalar('Train/Loss1/user' + str(idx + 1), loss['1'], round)
-            summary_writer.add_scalar('Train/Loss2/user' + str(idx + 1), loss['2'], round)
-            summary_writer.add_scalar('Train/Acc/user' + str(idx + 1), acc, round)
+#             summary_writer.add_scalar('Train/Loss/user' + str(idx + 1), loss['total'], round)
+#             summary_writer.add_scalar('Train/Loss1/user' + str(idx + 1), loss['1'], round)
+#             summary_writer.add_scalar('Train/Loss2/user' + str(idx + 1), loss['2'], round)
+#             summary_writer.add_scalar('Train/Acc/user' + str(idx + 1), acc, round)
             proto_loss += loss['2']
 
         # update global weights
@@ -84,7 +84,7 @@ def FedProto_taskheter(args, train_dataset, test_dataset, user_groups, user_grou
         save_protos(args, local_model_list, test_dataset, user_groups_lt)
 
 def FedProto_modelheter(args, train_dataset, test_dataset, user_groups, user_groups_lt, local_model_list, classes_list):
-    summary_writer = SummaryWriter('../tensorboard/'+ args.dataset +'_fedproto_mh_' + str(args.ways) + 'w' + str(args.shots) + 's' + str(args.stdev) + 'e_' + str(args.num_users) + 'u_' + str(args.rounds) + 'r')
+    #summary_writer = SummaryWriter('../tensorboard/'+ args.dataset +'_fedproto_mh_' + str(args.ways) + 'w' + str(args.shots) + 's' + str(args.stdev) + 'e_' + str(args.num_users) + 'u_' + str(args.rounds) + 'r')
 
     global_protos = []
     idxs_users = np.arange(args.num_users)
@@ -105,10 +105,10 @@ def FedProto_modelheter(args, train_dataset, test_dataset, user_groups, user_gro
             local_losses.append(copy.deepcopy(loss['total']))
 
             local_protos[idx] = agg_protos
-            summary_writer.add_scalar('Train/Loss/user' + str(idx + 1), loss['total'], round)
-            summary_writer.add_scalar('Train/Loss1/user' + str(idx + 1), loss['1'], round)
-            summary_writer.add_scalar('Train/Loss2/user' + str(idx + 1), loss['2'], round)
-            summary_writer.add_scalar('Train/Acc/user' + str(idx + 1), acc, round)
+#             summary_writer.add_scalar('Train/Loss/user' + str(idx + 1), loss['total'], round)
+#             summary_writer.add_scalar('Train/Loss1/user' + str(idx + 1), loss['1'], round)
+#             summary_writer.add_scalar('Train/Loss2/user' + str(idx + 1), loss['2'], round)
+#             summary_writer.add_scalar('Train/Acc/user' + str(idx + 1), acc, round)
             proto_loss += loss['2']
 
         # update local weights
